@@ -3,4 +3,4 @@ service "elasticsearch" do
   action [ :enable ]
 end
 
-install_plugin "mobz/elasticsearch-head"
+install_plugin "head"

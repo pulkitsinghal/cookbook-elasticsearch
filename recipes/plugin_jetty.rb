@@ -3,4 +3,4 @@ service "elasticsearch" do
   action [ :enable ]
 end
 
-install_plugin "sonian/elasticsearch-jetty/#{node.elasticsearch[:version]}"
+install_plugin "jetty"

@@ -1,1 +1,6 @@
-install_plugin "elasticsearch/elasticsearch-cloud-aws/#{node.elasticsearch[:plugin][:aws][:version]}"
+service "elasticsearch" do
+  supports :status => true, :restart => true
+  action [ :enable ]
+end
+
+install_plugin "aws"

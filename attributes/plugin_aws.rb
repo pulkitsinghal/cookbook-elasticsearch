@@ -4,6 +4,8 @@ aws = Chef::DataBagItem.load('elasticsearch', 'aws') rescue {}
 # ----------------------------------------------------------------------
 
 default.elasticsearch[:plugin][:aws][:version] = '1.5.0'
+default.elasticsearch[:plugin][:aws][:name] = "cloud-aws"
+default.elasticsearch[:plugin][:aws][:url] = "elasticsearch/elasticsearch-cloud-aws/#{node.elasticsearch[:plugin][:aws][:version]}"
 
 # === AWS ===
 # AWS configuration is set based on data bag values.
