@@ -4,7 +4,7 @@ Addendum
   1. cd ~/dev/esWithChefSolo/
   2. curl -# -L -k https://gist.github.com/gists/2793878/download | tar xz --strip 1 -C .
   3. replace data in run-1.json
-    1. Check and make sure that its still a proper json file after your edits ... unless sending your creds in json over the web ... gives you pause?! ... or maybe thsi site uses javascript to do it ... who knows ;)
+    1. Check and make sure that its still a proper json file after your edits ... unless sending your creds in json over the web ... gives you pause?! ... or maybe this site uses javascript to do it ... who knows ;)
        1. http://jsonformatter.curiousconcept.com/
     2. After the 1st time, I jsut kept a backup file that I could reuse rather than editing after every download
        1. cp run-1.json.backup run-1.json
