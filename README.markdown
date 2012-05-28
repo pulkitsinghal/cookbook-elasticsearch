@@ -2,38 +2,29 @@ Addendum
 --------
 
   1. cd ~/dev/esWithChefSolo/
-
   2. curl -# -L -k https://gist.github.com/gists/2793878/download | tar xz --strip 1 -C .
-
   3. replace data in run-1.json
-    1. http://jsonformatter.curiousconcept.com/
-    2. cp run-1.json.backup run-1.json
-
+    1. Check and make sure that its still a proper json file after your edits
+       1. http://jsonformatter.curiousconcept.com/
+    2. After the 1st time, I jsut kept a backup file that I could reuse rather than editing after every download
+       1. cp run-1.json.backup run-1.json
   4. export HOST=XXX.XXX.XXX.XXX
-
   5. export SSH_OPTIONS="-o User=ec2-user -o IdentityFile=~/.ec2/ec2.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-
   6. scp $SSH_OPTIONS ./bootstrap.sh ./patches.sh ./run-1.json ./run-2.json ./run-3.json ./solo.rb $HOST:/tmp
-
   7. time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/bootstrap.sh"
-
   8. time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/patches.sh"
-
   9. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-1.json"
     1. Check server status with either command and wait until its ready:
       1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
       2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-
   10. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-2.json"
     1. Check server status with either command and wait until its ready:
       1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
       2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-
   11. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-3.json"
     1. Check server status with either command and wait until its ready:
       1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
       2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-
   12. Where is the stuff on the server?
     1. /var/chef-solo/cookbooks/
     2. /usr/local/elasticsearch-0.19.3/plugins/
