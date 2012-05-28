@@ -29,7 +29,8 @@ end
 bash "setup jetty config" do
   user 'root'
   code <<-EOS
-    curl -o "#{node.elasticsearch[:conf_path]}/keystore" https://github.com/sonian/elasticsearch-jetty/raw/master/config/keystore
+    curl -o "#{node.elasticsearch[:conf_path]}/keystore" https://raw.github.com/sonian/elasticsearch-jetty/master/config/keystore
+    curl -o "#{node.elasticsearch[:conf_path]}/realm.properties" https://raw.github.com/sonian/elasticsearch-jetty/master/config/realm.properties
     echo '
 ################################## Security ##################################' >> "#{node.elasticsearch[:conf_path]}/elasticsearch.yml"
     cat "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty" >> "#{node.elasticsearch[:conf_path]}/elasticsearch.yml"
