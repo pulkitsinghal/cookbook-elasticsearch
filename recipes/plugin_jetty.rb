@@ -3,6 +3,14 @@ service "elasticsearch" do
   action [ :enable ]
 end
 
+# Backup the existing ES config file
+bash "setup jetty config" do
+  user 'root'
+  code <<-EOS
+    cp "#{node.elasticsearch[:conf_path]}/elasticsearch.yml" "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup"
+  EOS
+end
+
 # Create config file for elasticsearch-jetty plugin
 template "jetty.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty.xml"
