@@ -2,7 +2,7 @@ Addendum
 --------
 
   1. cd ~/dev/esWithChefSolo/
-  2. curl -# -L -k https://gist.github.com/gists/2793878/download | tar xz --strip 1 -C .
+  2. curl -# -L -k https://gist.github.com/gists/2821820/download | tar xz --strip 1 -C .
   3. replace data in run-1.json
     1. Check and make sure that its still a proper json file after your edits ... unless sending your creds in json over the web ... gives you pause?! ... or maybe this site uses javascript to do it ... who knows ;)
        1. http://jsonformatter.curiousconcept.com/
