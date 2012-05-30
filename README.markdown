@@ -1,5 +1,5 @@
-Addendum
---------
+Addendum - Using the recipe
+---------------------------
 
   1. cd ~/dev/esWithChefSolo/
   2. curl -# -L -k https://gist.github.com/gists/2821820/download | tar xz --strip 1 -C .
@@ -25,9 +25,18 @@ Addendum
     1. Check server status with either command and wait until its ready:
       1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
       2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-  12. Where is the stuff on the server?
-    1. /var/chef-solo/cookbooks/
-    2. /usr/local/elasticsearch-0.19.3/plugins/
+  12. You can test if evrything is working via the secure port using the head plugin:
+      https://xxx.xxx.xxx.xxx:9443/_plugin/head/index.html
+
+Addendum - Altering the recipe
+------------------------------
+
+  1. If you want to play around with what's been placed on your server then its worth knowing about these directories:
+     * /var/chef-solo/cookbooks/
+     * /usr/local/elasticsearch-0.19.3/plugins/
+     * /usr/local/etc/elasticsearch/
+  2. A good way to run cleanup and test any changes that you might make to the jetty plugin's chef replated files:
+     * sudo rm -f /usr/local/etc/elasticsearch/keystore && sudo rm -f /usr/local/etc/elasticsearch/elasticsearch.yml.jetty && sudo rm -f /usr/local/etc/elasticsearch/logging.yml && sudo rm -f /usr/local/etc/elasticsearch/jetty.xml && sudo rm -f /usr/local/etc/elasticsearch/jetty-ssl.xml && sudo rm -rf /usr/local/elasticsearch-0.19.3/plugins/jetty/ && sudo cp /usr/local/etc/elasticsearch/elasticsearch.yml.pre.jetty.backup /usr/local/etc/elasticsearch/elasticsearch.yml && ls -alrt /usr/local/etc/elasticsearch/ && ls -alrt /usr/local/elasticsearch-0.19.3/plugins/ && cd /var/chef-solo/cookbooks/elasticsearch && sudo git pull origin
 
 Description
 -----------
