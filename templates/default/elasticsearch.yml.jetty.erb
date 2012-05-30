@@ -92,6 +92,6 @@ sonian.elasticsearch.http.jetty:
     keystore_password: "OBF:1nc01vuz1w8f1w1c1rbu1rac1w261w9b1vub1ndq"
     <% end %>
     config: <%=node.elasticsearch[:conf_path]%>/jetty.xml
-            <% if default.elasticsearch[:plugin][:jetty][:https] %>
+            <% if node.elasticsearch[:plugin][:jetty][:https] %>
             ,<%=node.elasticsearch[:conf_path]%>/jetty-ssl.xml
             <% end %>
