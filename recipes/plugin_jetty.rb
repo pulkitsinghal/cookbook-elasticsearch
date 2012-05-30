@@ -11,6 +11,16 @@ bash "setup jetty config" do
   EOS
 end
 
+# Create SSL-specific config file for elasticsearch-jetty plugin
+template "jetty.xml" do
+  path "#{node.elasticsearch[:conf_path]}/jetty.xml"
+  source "jetty.xml.erb"
+  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
+  only_if do
+    default.elasticsearch[:plugin][:jetty][:https]
+  end
+end
+
 # Create config file for elasticsearch-jetty plugin
 template "jetty.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty.xml"
@@ -18,7 +28,7 @@ template "jetty.xml" do
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
 end
 
-# Create config file for elasticsearch-jetty plugin
+# Append config file for elasticsearch-jetty plugin to the existing ES config file
 template "elasticsearch.yml.jetty" do
   path "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty"
   source "elasticsearch.yml.jetty.erb"
