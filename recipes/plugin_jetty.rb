@@ -16,9 +16,7 @@ template "jetty-ssl.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty-ssl.xml"
   source "jetty-ssl.xml.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-  only_if do
-    default.elasticsearch[:plugin][:jetty][:https]
-  end
+  only_if { node.elasticsearch[:plugin][:jetty][:https] }
 end
 
 # Create config file for elasticsearch-jetty plugin
