@@ -131,6 +131,17 @@ template "elasticsearch.yml" do
   notifies :restart, resources(:service => 'elasticsearch')
 end
 
+# Create ES logging file
+# Q: Is it ok to lay down a file with logging rules for ES plugins ahead of time?
+#
+template "logging.yml" do
+  path   "#{node.elasticsearch[:conf_path]}/logging.yml"
+  source "logging.yml.erb"
+  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
+
+  notifies :restart, resources(:service => 'elasticsearch')
+end
+
 # Symlink current version to main directory
 #
 link "#{node.elasticsearch[:dir]}/elasticsearch" do
