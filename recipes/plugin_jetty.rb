@@ -12,9 +12,9 @@ bash "setup jetty config" do
 end
 
 # Create SSL-specific config file for elasticsearch-jetty plugin
-template "jetty.xml" do
-  path "#{node.elasticsearch[:conf_path]}/jetty.xml"
-  source "jetty.xml.erb"
+template "jetty-ssl.xml" do
+  path "#{node.elasticsearch[:conf_path]}/jetty-ssl.xml"
+  source "jetty-ssl.xml.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
   only_if do
     default.elasticsearch[:plugin][:jetty][:https]
