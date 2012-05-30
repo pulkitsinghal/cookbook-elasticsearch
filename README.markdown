@@ -1,30 +1,30 @@
 Addendum - Using the recipe
 ---------------------------
 
-  1. cd ~/dev/esWithChefSolo/
-  2. curl -# -L -k https://gist.github.com/gists/2821820/download | tar xz --strip 1 -C .
+  1. ```cd ~/dev/esWithChefSolo/```
+  2. ```curl -# -L -k https://gist.github.com/gists/2821820/download | tar xz --strip 1 -C .```
   3. replace data in run-1.json
     1. Check and make sure that its still a proper json file after your edits ... unless sending your creds in json over the web ... gives you pause?! ... or maybe this site uses javascript to do it ... who knows ;)
        1. http://jsonformatter.curiousconcept.com/
     2. After the 1st time, I jsut kept a backup file that I could reuse rather than editing after every download
-       1. cp run-1.json.backup run-1.json
-  4. export HOST=XXX.XXX.XXX.XXX
-  5. export SSH_OPTIONS="-o User=ec2-user -o IdentityFile=~/.ec2/ec2.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-  6. scp $SSH_OPTIONS ./bootstrap.sh ./patches.sh ./run-1.json ./run-2.json ./run-3.json ./solo.rb $HOST:/tmp
-  7. time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/bootstrap.sh"
-  8. time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/patches.sh"
-  9. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-1.json"
+       1. ```cp run-1.json.backup run-1.json```
+  4. ```export HOST=XXX.XXX.XXX.XXX```
+  5. ```export SSH_OPTIONS="-o User=ec2-user -o IdentityFile=~/.ec2/ec2.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"```
+  6. ```scp $SSH_OPTIONS ./bootstrap.sh ./patches.sh ./run-1.json ./run-2.json ./run-3.json ./solo.rb $HOST:/tmp```
+  7. ```time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/bootstrap.sh"```
+  8. ```time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/patches.sh"```
+  9. ```time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-1.json"```
     1. Check server status with either command and wait until its ready:
-      1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
-      2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-  10. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-2.json"
+      1. ```ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"```
+      2. ```ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"```
+  10. ```time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-2.json"```
     1. Check server status with either command and wait until its ready:
-      1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
-      2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
-  11. time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-3.json"
+      1. ```ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"```
+      2. ```ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"```
+  11. ```time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-3.json"```
     1. Check server status with either command and wait until its ready:
-      1. ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"
-      2. ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"
+      1. ```ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"```
+      2. ```ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"```
   12. You can test if evrything is working via the secure port using the head plugin:
       https://xxx.xxx.xxx.xxx:9443/_plugin/head/index.html
 
@@ -32,9 +32,9 @@ Addendum - Altering the recipe
 ------------------------------
 
   1. If you want to play around with what's been placed on your server then its worth knowing about these directories:
-     * /var/chef-solo/cookbooks/
-     * /usr/local/elasticsearch-0.19.3/plugins/
-     * /usr/local/etc/elasticsearch/
+     * ```/var/chef-solo/cookbooks/```
+     * ```/usr/local/elasticsearch-0.19.3/plugins/```
+     * ```/usr/local/etc/elasticsearch/```
   2. A good way to run cleanup and test any changes that you might make to the jetty plugin's chef replated files:
      * sudo rm -f /usr/local/etc/elasticsearch/keystore && sudo rm -f /usr/local/etc/elasticsearch/elasticsearch.yml.jetty && sudo rm -f /usr/local/etc/elasticsearch/logging.yml && sudo rm -f /usr/local/etc/elasticsearch/jetty.xml && sudo rm -f /usr/local/etc/elasticsearch/jetty-ssl.xml && sudo rm -rf /usr/local/elasticsearch-0.19.3/plugins/jetty/ && sudo cp /usr/local/etc/elasticsearch/elasticsearch.yml.pre.jetty.backup /usr/local/etc/elasticsearch/elasticsearch.yml && ls -alrt /usr/local/etc/elasticsearch/ && ls -alrt /usr/local/elasticsearch-0.19.3/plugins/ && cd /var/chef-solo/cookbooks/elasticsearch && sudo git pull origin
 
