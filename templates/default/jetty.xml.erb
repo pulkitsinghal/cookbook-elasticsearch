@@ -374,7 +374,7 @@
     <!-- ======================================== -->
     <!--         Add HTTP connector               -->
     <!-- ======================================== -->
-    <% if default.elasticsearch[:plugin][:jetty][:http] %>
+    <% if node.elasticsearch[:plugin][:jetty][:http] %>
     <Call name="addConnector">
         <Arg>
             <New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
