@@ -96,23 +96,7 @@
                 <New class="org.eclipse.jetty.security.ConstraintMapping">
                     <Set name="method">GET</Set>
                     <Set name="pathSpec">
-                        /,
-                        /_plugin/head/index.html,
-                        /_plugin/head/lib/es/es.css,
-                        /_plugin/head/lib/jsacx/src/jsacx-widgets.css,
-                        /_plugin/head/lib/jsacx/src/jquery.js,
-                        /_plugin/head/lib/jsacx/src/jsacx.js,
-                        /_plugin/head/lib/nohtml/jquery.acx-nohtml.js,
-                        /_plugin/head/lib/lang/en_strings.js,
-                        /_plugin/head/lib/jsacx/src/jsacx-widgets.js,
-                        /_plugin/head/lib/jsacx/src/jsacx-fields.js,
-                        /_plugin/head/lib/jsacx/src/jsacx-data.js,
-                        /_plugin/head/lib/es/core.js,
-                        /_plugin/head/lib/es/widgets.js,
-                        /_plugin/head/lib/graphael/g.raphael.standalone.js,
-                        /_plugin/head/lib/dateRangeParser/date-range-parser.js,
-                        /_plugin/head/lib/jsacx/src/images/*,
-                        /_plugin/head/lib/es/images/favicon.png
+                        /
                     </Set>
                     <Set name="constraint">
                         <Ref id="NoneSecurityConstraint"/>
@@ -172,7 +156,11 @@
                     <Set name="method">GET</Set>
                     <Set name="pathSpec">
                         /_cache/clear,/_flush,/_optimize,/_refresh,/{index}/_cache/clear,/{index}/_flush,
-                        /{index}/_optimize,/{index}/_refresh
+                        /{index}/_optimize,/{index}/_refresh,
+                        /_plugin/head/*,
+                        /_plugin/head/*/*/*,
+                        /_plugin/head/*/*/*/*,
+                        /_plugin/head/*/*/*/*/*
                     </Set>
                     <Set name="constraint">
                         <Ref id="ReadWriteSecurityConstraint"/>
