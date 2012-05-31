@@ -10,7 +10,7 @@ Addendum - Using the recipe
        1. ```cp run-1.json.backup run-1.json```
   4. ```export HOST=XXX.XXX.XXX.XXX```
   5. ```export SSH_OPTIONS="-o User=ec2-user -o IdentityFile=~/.ec2/ec2.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"```
-  6. ```scp $SSH_OPTIONS ./bootstrap.sh ./patches.sh ./run-1.json ./run-2.json ./run-3.json ./solo.rb $HOST:/tmp```
+  6. ```scp $SSH_OPTIONS ./bootstrap.sh ./patches.sh ./run-*.json ./solo.rb $HOST:/tmp```
   7. ```time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/bootstrap.sh"```
   8. ```time ssh -t $SSH_OPTIONS $HOST "sudo bash /tmp/patches.sh"```
   9. ```time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-1.json"```
