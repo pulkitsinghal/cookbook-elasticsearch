@@ -306,7 +306,8 @@
                 <New class="org.eclipse.jetty.security.ConstraintMapping">
                     <Set name="method">PUT</Set>
                     <Set name="pathSpec">
-                        /_cluster/settings,/_settings
+                        /_cluster/settings,/_settings,
+                        /_river/*/*
                     </Set>
                     <Set name="constraint">
                         <Ref id="AdminSecurityConstraint"/>
