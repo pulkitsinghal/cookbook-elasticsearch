@@ -21,7 +21,7 @@ bash "configure couchdb river" do
   notifies :restart, resources(:service => 'elasticsearch')
   only_if "curl -XGET -k 'https://localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' | grep -q '\"exists\":false'"
   code <<-EOS
-   echo curl -XPUT -k 'https://superuser:Adm1n@localhost:9443/_river/wishlist3/_meta' -d '{
+    curl -XPUT -k 'https://"#{node.elasticsearch['adminUsername']}":"#{node.elasticsearch['adminPassword']}"@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
       "type" : "couchdb",
       "couchdb" : {
         "protocol" : "#{node.elasticsearch['plugin']['river']['couchdb']['protocol']}",
@@ -41,7 +41,7 @@ bash "configure couchdb river" do
         "bulk_timeout" : "#{node.elasticsearch['plugin']['river']['couchdb']['bulk_timeout']}"
       }
     }'
-    curl -XPUT -k 'https://localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
+    curl -XPUT -k 'https://"#{node.elasticsearch['adminUsername']}":"#{node.elasticsearch['adminPassword']}"@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
       "type" : "couchdb",
       "couchdb" : {
         "protocol" : "#{node.elasticsearch['plugin']['river']['couchdb']['protocol']}",
