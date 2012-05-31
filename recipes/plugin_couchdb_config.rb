@@ -21,44 +21,44 @@ bash "configure couchdb river" do
   notifies :restart, resources(:service => 'elasticsearch')
   only_if "curl -XGET -k 'https://localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' | grep -q '\"exists\":false'"
   code <<-EOS
-    curl -XPUT -k 'https://"#{node.elasticsearch['adminUsername']}":"#{node.elasticsearch['adminPassword']}"@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
+    echo curl -XPUT -k 'https://#{node.elasticsearch['adminUsername']}:#{node.elasticsearch['adminPassword']}@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
       "type" : "couchdb",
       "couchdb" : {
-        "protocol" : "#{node.elasticsearch['plugin']['river']['couchdb']['protocol']}",
-        "host" : "#{node.elasticsearch['plugin']['river']['couchdb']['host']}",
-        "port" : "#{node.elasticsearch['plugin']['river']['couchdb']['port']}",
-        "no_verify" : "#{node.elasticsearch['plugin']['river']['couchdb']['no_verify']}",
-        "user" : "#{node.elasticsearch['plugin']['river']['couchdb']['user']}",
-        "password" : "#{node.elasticsearch['plugin']['river']['couchdb']['password']}",
-        "db" : "#{node.elasticsearch['plugin']['river']['couchdb']['db']}",
-        "ignore_attachments" : "#{node.elasticsearch['plugin']['river']['couchdb']['ignore_attachments']}",
-        "filter" : null
+        "protocol"           : #{node.elasticsearch['plugin']['river']['couchdb']['protocol']},
+        "host"               : #{node.elasticsearch['plugin']['river']['couchdb']['host']},
+        "port"               : #{node.elasticsearch['plugin']['river']['couchdb']['port']},
+        "no_verify"          : #{node.elasticsearch['plugin']['river']['couchdb']['no_verify']},
+        "user"               : #{node.elasticsearch['plugin']['river']['couchdb']['user']},
+        "password"           : #{node.elasticsearch['plugin']['river']['couchdb']['password']},
+        "db"                 : #{node.elasticsearch['plugin']['river']['couchdb']['db']},
+        "ignore_attachments" : #{node.elasticsearch['plugin']['river']['couchdb']['ignore_attachments']},
+        "filter"             : null
       },
       "index" : {
-        "index" : "#{node.elasticsearch['plugin']['river']['couchdb']['index']}",
-        "type" : "#{node.elasticsearch['plugin']['river']['couchdb']['type']}",
-        "bulk_size" : "#{node.elasticsearch['plugin']['river']['couchdb']['bulk_size']}",
-        "bulk_timeout" : "#{node.elasticsearch['plugin']['river']['couchdb']['bulk_timeout']}"
+        "index"        : #{node.elasticsearch['plugin']['river']['couchdb']['index']},
+        "type"         : #{node.elasticsearch['plugin']['river']['couchdb']['type']},
+        "bulk_size"    : #{node.elasticsearch['plugin']['river']['couchdb']['bulk_size']},
+        "bulk_timeout" : #{node.elasticsearch['plugin']['river']['couchdb']['bulk_timeout']}
       }
     }'
-    curl -XPUT -k 'https://"#{node.elasticsearch['adminUsername']}":"#{node.elasticsearch['adminPassword']}"@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
+    curl -XPUT -k 'https://#{node.elasticsearch['adminUsername']}:#{node.elasticsearch['adminPassword']}@localhost:9443/_river/#{node.elasticsearch['plugin']['river']['couchdb']['db']}/_meta' -d '{
       "type" : "couchdb",
       "couchdb" : {
-        "protocol" : "#{node.elasticsearch['plugin']['river']['couchdb']['protocol']}",
-        "host" : "#{node.elasticsearch['plugin']['river']['couchdb']['host']}",
-        "port" : "#{node.elasticsearch['plugin']['river']['couchdb']['port']}",
-        "no_verify" : "#{node.elasticsearch['plugin']['river']['couchdb']['no_verify']}",
-        "user" : "#{node.elasticsearch['plugin']['river']['couchdb']['user']}",
-        "password" : "#{node.elasticsearch['plugin']['river']['couchdb']['password']}",
-        "db" : "#{node.elasticsearch['plugin']['river']['couchdb']['db']}",
-        "ignore_attachments" : "#{node.elasticsearch['plugin']['river']['couchdb']['ignore_attachments']}",
-        "filter" : null
+        "protocol"           : #{node.elasticsearch['plugin']['river']['couchdb']['protocol']},
+        "host"               : #{node.elasticsearch['plugin']['river']['couchdb']['host']},
+        "port"               : #{node.elasticsearch['plugin']['river']['couchdb']['port']},
+        "no_verify"          : #{node.elasticsearch['plugin']['river']['couchdb']['no_verify']},
+        "user"               : #{node.elasticsearch['plugin']['river']['couchdb']['user']},
+        "password"           : #{node.elasticsearch['plugin']['river']['couchdb']['password']},
+        "db"                 : #{node.elasticsearch['plugin']['river']['couchdb']['db']},
+        "ignore_attachments" : #{node.elasticsearch['plugin']['river']['couchdb']['ignore_attachments']},
+        "filter"             : null
       },
       "index" : {
-        "index" : "#{node.elasticsearch['plugin']['river']['couchdb']['index']}",
-        "type" : "#{node.elasticsearch['plugin']['river']['couchdb']['type']}",
-        "bulk_size" : "#{node.elasticsearch['plugin']['river']['couchdb']['bulk_size']}",
-        "bulk_timeout" : "#{node.elasticsearch['plugin']['river']['couchdb']['bulk_timeout']}"
+        "index"        : #{node.elasticsearch['plugin']['river']['couchdb']['index']},
+        "type"         : #{node.elasticsearch['plugin']['river']['couchdb']['type']},
+        "bulk_size"    : #{node.elasticsearch['plugin']['river']['couchdb']['bulk_size']},
+        "bulk_timeout" : #{node.elasticsearch['plugin']['river']['couchdb']['bulk_timeout']}
       }
     }'
   EOS
