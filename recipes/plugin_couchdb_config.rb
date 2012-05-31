@@ -3,6 +3,17 @@ service "elasticsearch" do
   action [ :enable ]
 end
 
+####
+# No point in using this, we don't just want to make sure that the server is up
+# We also want to be sure that all the data has been loaded back up by cloud-aws
+# and there is simply no hook for that that I know of right now :(
+####
+#
+#execute "Ensure Restart" do
+#   command "sudo service elasticsearch status -v | grep 'running with PID'"
+#   retries 20   #Will check 20 times, every 2 seconds for 40 seconds total
+#end
+
 # The CURL operation that creates the river config, should only run if
 # it doesn't see a configured metadata document in the _river index already
 bash "configure couchdb river" do
