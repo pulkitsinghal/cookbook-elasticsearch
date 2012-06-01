@@ -25,7 +25,11 @@ Addendum - Using the recipe
     1. Check server status with either command and wait until its ready:
       1. ```ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"```
       2. ```ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"```
-  12. You can test if evrything is working via the secure port using the head plugin:
+  12. ```time ssh -t $SSH_OPTIONS $HOST "sudo chef-solo --node-name elasticsearch-test-1 -j /tmp/run-4.json"```
+    1. Check server status with either command and wait until its ready:
+      1. ```ssh -t $SSH_OPTIONS $HOST "curl localhost:9200"```
+      2. ```ssh -t $SSH_OPTIONS $HOST "sudo service elasticsearch status -v"```
+  13. You can test if evrything is working via the secure port using the head plugin:
       https://xxx.xxx.xxx.xxx:9443/_plugin/head/index.html
 
 Addendum - Altering the recipe
