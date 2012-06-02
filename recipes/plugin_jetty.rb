@@ -19,14 +19,14 @@ template "jetty-ssl.xml" do
   only_if { node.elasticsearch[:plugin][:jetty][:https] }
 end
 
-# Create config file for elasticsearch-jetty plugin
+# Create XML config file for elasticsearch-jetty plugin
 template "jetty.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty.xml"
   source "jetty.xml.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
 end
 
-# Append config file for elasticsearch-jetty plugin to the existing ES config file
+# Create YML config file sub-section for elasticsearch-jetty plugin to later append to the existing ES config file
 template "elasticsearch.yml.jetty" do
   path "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty"
   source "elasticsearch.yml.jetty.erb"
