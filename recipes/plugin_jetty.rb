@@ -51,7 +51,7 @@ template "jetty.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty.xml"
   source "jetty.xml.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup") }
+  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/jetty.xml") }
 end
 
 # Create YML config file sub-section for elasticsearch-jetty plugin to later append to the existing ES config file
