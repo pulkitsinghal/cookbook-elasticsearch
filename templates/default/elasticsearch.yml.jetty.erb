@@ -89,7 +89,13 @@ sonian.elasticsearch.http.jetty:
     <% end %>
     <% if node.elasticsearch[:plugin][:jetty][:https] %>
     ssl_port: 9443
-    keystore_password: "OBF:1nc01vuz1w8f1w1c1rbu1rac1w261w9b1vub1ndq"
+      <% if node.elasticsearch['plugin']['jetty']['keystorePassword'] %>
+        <% if node.elasticsearch['plugin']['jetty']['encryptPwdCmd'] %>
+    keystore_password: "<%=`#{node.elasticsearch['plugin']['jetty']['encryptPwdCmd']}`%>"
+        <% else %>
+    keystore_password: "<%=node.elasticsearch['plugin']['jetty']['keystorePassword']%>"
+        <% end %>
+      <% end %>
     <% end %>
     config: <%=node.elasticsearch[:conf_path]%>/jetty.xml
             <% if node.elasticsearch[:plugin][:jetty][:https] %>
