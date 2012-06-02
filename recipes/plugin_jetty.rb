@@ -3,36 +3,6 @@ service "elasticsearch" do
   action [ :enable ]
 end
 
-# Backup the existing ES config file
-bash "backup ES config" do
-  user 'root'
-  code <<-EOS
-    cp "#{node.elasticsearch[:conf_path]}/elasticsearch.yml" "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup"
-  EOS
-end
-
-# Create SSL-specific config file for elasticsearch-jetty plugin
-template "jetty-ssl.xml" do
-  path "#{node.elasticsearch[:conf_path]}/jetty-ssl.xml"
-  source "jetty-ssl.xml.erb"
-  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-  only_if { node.elasticsearch[:plugin][:jetty][:https] }
-end
-
-# Create XML config file for elasticsearch-jetty plugin
-template "jetty.xml" do
-  path "#{node.elasticsearch[:conf_path]}/jetty.xml"
-  source "jetty.xml.erb"
-  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-end
-
-# Create YML config file sub-section for elasticsearch-jetty plugin to later append to the existing ES config file
-template "elasticsearch.yml.jetty" do
-  path "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty"
-  source "elasticsearch.yml.jetty.erb"
-  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-end
-
 # If the keystoreFilename is provided then deploy it to jetty
 bash "deploy any existing server certificate" do
   user 'root'
@@ -57,6 +27,39 @@ bash "create a new server certificate" do
   openssl pkcs12 -export -out #{node.elasticsearch['plugin']['jetty']['keystoreFilename']} -passout pass:#{node.elasticsearch['plugin']['jetty']['keystorePassword']} -inkey jetty.key.pem -passin pass:#{node.elasticsearch['plugin']['jetty']['keystorePassword']} -in jetty.crt.pem -certfile jetty.crt.pem -name "#{node.elasticsearch['plugin']['jetty']['alias']}"
   EOH
   not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}") }
+end
+
+# Create SSL-specific config file for elasticsearch-jetty plugin
+template "jetty-ssl.xml" do
+  path "#{node.elasticsearch[:conf_path]}/jetty-ssl.xml"
+  source "jetty-ssl.xml.erb"
+  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
+  only_if { node.elasticsearch[:plugin][:jetty][:https] }
+end
+
+# Backup the existing ES config file
+bash "backup ES config" do
+  user 'root'
+  code <<-EOS
+    cp "#{node.elasticsearch[:conf_path]}/elasticsearch.yml" "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup"
+  EOS
+  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup") }
+end
+
+# Create XML config file for elasticsearch-jetty plugin
+template "jetty.xml" do
+  path "#{node.elasticsearch[:conf_path]}/jetty.xml"
+  source "jetty.xml.erb"
+  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
+  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/elasticsearch.yml.pre.jetty.backup") }
+end
+
+# Create YML config file sub-section for elasticsearch-jetty plugin to later append to the existing ES config file
+template "elasticsearch.yml.jetty" do
+  path "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty"
+  source "elasticsearch.yml.jetty.erb"
+  owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
+  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty") }
 end
 
 # Append the plugin's configured file to the actual config file for ES
