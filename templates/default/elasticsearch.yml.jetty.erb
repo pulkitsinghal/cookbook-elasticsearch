@@ -81,6 +81,12 @@ sonian.elasticsearch.http.filter:
                     method: PUT, POST
                     log_body: true
 
+#debug data
+com.output
+    tryA: <%=`echo "#{node.elasticsearch['plugin']['jetty']['encryptPwdCmd']}"`%>
+    tryB: <%=`echo "#{node.elasticsearch[:dir]}"`%>
+    tryC: <%=`echo "#{node.elasticsearch[:version]}"`%>
+    tryD: <%=`echo "#{node.elasticsearch['plugin']['jetty']['keystorePassword']}"`%>
 
 # Jetty Settings
 sonian.elasticsearch.http.jetty:
@@ -91,7 +97,6 @@ sonian.elasticsearch.http.jetty:
     ssl_port: 9443
       <% if node.elasticsearch['plugin']['jetty']['keystorePassword'] %>
         <% if node.elasticsearch['plugin']['jetty']['encryptPwdCmd'] %>
-          <% puts #{node.elasticsearch['plugin']['jetty']['encryptPwdCmd']}%>
     keystore_password: "<%=`#{node.elasticsearch['plugin']['jetty']['encryptPwdCmd']}`%>"
         <% else %>
     keystore_password: "<%=node.elasticsearch['plugin']['jetty']['keystorePassword']%>"
