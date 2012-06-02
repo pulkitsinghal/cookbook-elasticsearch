@@ -37,7 +37,7 @@ end
 bash "deploy any existing server certificate" do
   user 'root'
   code <<-EOS
-  mv /tmp/#{node.elasticsearch['plugin']['jetty']['keystoreFilename']} #{node.elasticsearch[:conf_path]}/#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}"
+  mv /tmp/"#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}" "#{node.elasticsearch[:conf_path]}"/"#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}"
   EOS
   not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}") }
 end
