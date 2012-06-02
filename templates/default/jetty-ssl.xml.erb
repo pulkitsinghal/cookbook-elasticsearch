@@ -12,10 +12,10 @@
             <New class="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
                 <Arg>
                     <New class="org.eclipse.jetty.http.ssl.SslContextFactory">
-                        <Set name="keyStore"><%=node.elasticsearch[:conf_path]%>/<%=#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}%></Set>
+                        <Set name="keyStore"><%=node.elasticsearch[:conf_path]%>/<%=node.elasticsearch['plugin']['jetty']['keystoreFilename']%></Set>
                         <Set name="keyStorePassword"><Property name="jetty.keystore_password"/></Set>
                         <Set name="keyManagerPassword"><Property name="jetty.keystore_password"/></Set>
-                        <Set name="trustStore"><%=node.elasticsearch[:conf_path]%>/<%=#{node.elasticsearch['plugin']['jetty']['keystoreFilename']}%></Set>
+                        <Set name="trustStore"><%=node.elasticsearch[:conf_path]%>/<%=node.elasticsearch['plugin']['jetty']['keystoreFilename']%></Set>
                         <Set name="trustStorePassword"><Property name="jetty.keystore_password"/></Set>
                     </New>
                 </Arg>
