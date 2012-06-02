@@ -51,7 +51,6 @@ template "jetty.xml" do
   path "#{node.elasticsearch[:conf_path]}/jetty.xml"
   source "jetty.xml.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/jetty.xml") }
 end
 
 # Create YML config file sub-section for elasticsearch-jetty plugin to later append to the existing ES config file
@@ -59,14 +58,12 @@ template "elasticsearch.yml.jetty" do
   path "#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty"
   source "elasticsearch.yml.jetty.erb"
   owner node.elasticsearch[:user] and group node.elasticsearch[:user] and mode 0755
-  not_if { ::File.exists?("#{node.elasticsearch[:conf_path]}/elasticsearch.yml.jetty") }
 end
 
 # Append the plugin's configured file to the actual config file for ES
 bash "setup jetty config" do
   user 'root'
   code <<-EOS
-    curl -o "#{node.elasticsearch[:conf_path]}/keystore" https://raw.github.com/sonian/elasticsearch-jetty/master/config/keystore
     curl -o "#{node.elasticsearch[:conf_path]}/realm.properties" https://raw.github.com/sonian/elasticsearch-jetty/master/config/realm.properties
     echo '
 ################################## Security ##################################' >> "#{node.elasticsearch[:conf_path]}/elasticsearch.yml"
